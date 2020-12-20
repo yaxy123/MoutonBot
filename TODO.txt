@@ -1,0 +1,4 @@
+Add lifelines
+Optimize some stuff
+sort leaderboard
+make questions generate when they need to (probably in 5s)

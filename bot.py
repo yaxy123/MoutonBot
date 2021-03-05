@@ -126,7 +126,7 @@ async def on_message(message):
             players[player] += 1
             await next_question(message, player)
         else:
-            await message.channel.send(f"Wrong answer dumbfuck <:ooo:789859370342154271>")
+            await message.channel.send(f"Wrong answer dumbfuck <:OOO:817450777379209217>")
             if answer == 0:
                 await message.channel.send("The answer was A")
             elif answer == 1:
@@ -139,8 +139,14 @@ async def on_message(message):
             await next_question(message, player)
 
     if message.content == '!leaderboard':
+        lb = ""
+        dict(sorted(leaderboard.items(), key=lambda item: item[1])) 
         for player in leaderboard:
-            await message.channel.send(f"{await client.fetch_user(player)}: ${leaderboard[player]}")
+            lb += f"{await client.fetch_user(player)}: ${leaderboard[player]}" + '\n'
+            #await message.channel.send(f"{await client.fetch_user(player)}: ${leaderboard[player]}")
+        await message.channel.send(lb)
+
+        
 
     if message.content == '!stop':
         player = message.author.id

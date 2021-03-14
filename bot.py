@@ -35,15 +35,15 @@ async def save(dic):
             f.write(f'{key} {dic[key]}\n')
 
 async def next_question(message, player):
-    if players[player] == 5:
+    if players[player] == 6:
         await message.channel.send(f'<@{player}> Congratulations you secured $1,000')
         leaderboard[player] += 1000
         await save(leaderboard)
-    if players[player] == 10:
+    if players[player] == 11:
         await message.channel.send(f'<@{player}> Congratulations you secured $32,000')
         leaderboard[player] += 32000
         await save(leaderboard)
-    if players[player] == 15:
+    if players[player] == 16:
         await message.channel.send(f'<@{player}> Congratulations you won $1,000,000')
         leaderboard[player] += 1000000
         await save(leaderboard)
@@ -109,34 +109,37 @@ async def on_message(message):
     if message.content == '!A' or message.content == '!B' or message.content == '!C' or message.content == '!D':
         player = message.author.id
         answer = answers[player]
+        lb = ""
         if message.content == '!A' and answer == 0:
-            await message.channel.send(f"Gratz you choose the right answer! Current pot: ${scoreboard[players[player]]}")
+            lb += f"Gratz you choose the right answer! Current pot: ${scoreboard[players[player]]}"
             players[player] += 1
             await next_question(message, player)
         elif message.content == '!B' and answer == 1:
-            await message.channel.send(f"Gratz you choose the right answer! Current pot: ${scoreboard[players[player]]}")
+            lb += f"Gratz you choose the right answer! Current pot: ${scoreboard[players[player]]}"
             players[player] += 1
             await next_question(message, player)
         elif message.content == '!C' and answer == 2:
-            await message.channel.send(f"Gratz you choose the right answer! Current pot: ${scoreboard[players[player]]}")
+            lb += f"Gratz you choose the right answer! Current pot: ${scoreboard[players[player]]}"
             players[player] += 1
             await next_question(message, player)
         elif message.content == '!D' and answer == 3:
-            await message.channel.send(f"Gratz you choose the right answer! Current pot: ${scoreboard[players[player]]}")
+            lb += f"Gratz you choose the right answer! Current pot: ${scoreboard[players[player]]}"
             players[player] += 1
             await next_question(message, player)
         else:
-            await message.channel.send(f"Wrong answer dumbfuck <:OOO:817450777379209217>")
+            lb += f"Wrong answer dumbfuck <:OOO~1:820781663361040385>" + '\n'
             if answer == 0:
-                await message.channel.send("The answer was A")
+                lb += "The answer was A"
             elif answer == 1:
-                await message.channel.send("The answer was B")
+                lb += "The answer was A"
             elif answer == 2:
-                await message.channel.send("The answer was C")
+                lb += "The answer was A"
             elif answer == 3:
-                await message.channel.send("The answer was D")
+                lb += "The answer was A"
+            await message.channel.send(lb)
             await generate_questions(player)
             await next_question(message, player)
+        await message.channel.send(lb)
 
     if message.content == '!leaderboard':
         lb = ""
@@ -152,9 +155,9 @@ async def on_message(message):
         player = message.author.id
         await message.channel.send(f'<@{player}> Congratulations you won ${scoreboard[players[player]-1]}')
         winnings = scoreboard[players[player]-1]
-        if players[player] >= 5:
+        if players[player] >= 6:
             winnings -= 1000
-        if players[player] >= 10:
+        if players[player] >= 11:
             winnings -= 32000
         leaderboard[player] += winnings
         await save(leaderboard)
